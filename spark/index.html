@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Open in Spark</title>
+<style>
+body{font:17px -apple-system,system-ui,sans-serif;margin:0;min-height:100vh;display:grid;place-items:center;background:#F2EEEA;color:#2C2C2A}
+main{text-align:center;padding:24px}
+a{display:inline-block;padding:14px 22px;border-radius:14px;background:#B8541E;color:#fff;text-decoration:none;font-weight:600}
+p{color:#625448;font-size:14px;max-width:32ch;margin:14px auto 0}
+</style>
+<main><a id="go" href="#">Open in Spark</a><p id="st"></p></main>
+<script>
+// Life Console hop page: #bl=<Spark's base64 link payload>  ->  readdlespark://bl=<payload>  (opens the email in Spark on the Mac)
+// The payload is in the fragment (#), which the browser never sends to this server. Nothing is stored or logged here.
+(function(){
+  var bl=new URLSearchParams(location.hash.slice(1)).get("bl")||"";
+  var go=document.getElementById("go"), st=document.getElementById("st");
+  if(!/^[A-Za-z0-9+\/=\r\n]{8,2000}$/.test(bl)){go.style.display="none";st.textContent="This link doesn't carry an email.";return;}
+  var u="readdlespark://bl="+encodeURIComponent(bl);
+  go.href=u; st.textContent="Opens the email in Spark. If nothing happens, click the button.";
+  location.replace(u);
+})();
+</script>
